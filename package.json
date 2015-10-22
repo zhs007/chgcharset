@@ -1,0 +1,42 @@
+{
+  "name": "chgcharset",
+  "version": "0.1.0",
+  "description": "chg file charset with cmd",
+  "keywords": [
+    "charset"
+  ],
+  "preferGlobal": true,
+  "config": {
+    "publishtest": false
+  },
+  "homepage": "http://www.heysdk.com/",
+  "author": {
+    "name": "zhs007",
+    "email": "sssxueren@gmail.com",
+    "url": "http://www.heysdk.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhs007/chgcharset"
+  },
+  "bugs": {
+    "url": "https://github.com/zhs007/chgcharset/issues",
+    "email": "sssxueren@gmail.com"
+  },
+  "directories": {
+    "bin": "./bin"
+  },
+  "main": "./chgcharset.js",
+  "bin": {
+    "chgcharset": "./bin/chgcharset.js"
+  },
+  "scripts": {
+    "start": "node ./bin/chgcharset.js"
+  },
+  "dependencies": {
+    "shelljs": "*",
+    "yargs": "*"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
