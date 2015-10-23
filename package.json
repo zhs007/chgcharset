@@ -35,7 +35,9 @@
   },
   "dependencies": {
     "shelljs": "*",
-    "yargs": "*"
+    "yargs": "*",
+    "iconv-lite": "*",
+    "glob": "*"
   },
   "license": "MIT",
   "readmeFilename": "README.md"
