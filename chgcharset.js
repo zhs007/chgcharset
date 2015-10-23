@@ -29,7 +29,7 @@ var argv = require('yargs')
         type: 'boolean'
     })
     .usage('Usage: chgcharset files [options]')
-    .example('chgcharset **/*.lua -i gbk -o utf8 -bom', 'chg abc.lua charset from gbk to utf8 with BOM')
+    .example('chgcharset **/*.lua -i gbk -o utf8 --bom', 'chg abc.lua charset from gbk to utf8 with BOM')
     .help('h')
     .alias('h', 'help')
     .epilog('copyright 2015')
