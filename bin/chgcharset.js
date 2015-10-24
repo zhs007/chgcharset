@@ -38,7 +38,7 @@ var argv = require('yargs')
 
 var basearr = argv._;
 
-if (basearr == undefined || basearr.length != 1) {
+if (basearr == undefined || basearr.length < 1) {
     console.log('Usage: chgcharset files [options]');
 
     process.exit(1);
@@ -112,39 +112,41 @@ var srccharset = argv.input;
 var destcharset = argv.output;
 var bom = argv.bom;
 
-var lstfile = glob.sync(basearr[0]);
-for (var i = 0; i < lstfile.length; ++i) {
-    var srcfile = lstfile[i];
+for (var j = 0; j < basearr.length; ++j) {
+    var lstfile = glob.sync(basearr[j]);
+    for (var i = 0; i < lstfile.length; ++i) {
+        var srcfile = lstfile[i];
 
-    if (fs.existsSync(srcfile)) {
-        var srcbuf = fs.readFileSync(srcfile);
-        var srcbom = hasBOM(srcbuf);
-        if (srcbom) {
-            if (srccharset != 'utf8') {
-                console.log('Err: ' + srcfile + ' charset is utf8-bom');
+        if (fs.existsSync(srcfile)) {
+            var srcbuf = fs.readFileSync(srcfile);
+            var srcbom = hasBOM(srcbuf);
+            if (srcbom) {
+                if (srccharset != 'utf8') {
+                    console.log('Err: ' + srcfile + ' charset is utf8-bom');
+
+                    continue;
+                }
+
+                srcbuf = cutBOM(srcbuf);
+            }
+
+            if (checkCharset(srcbuf, srccharset)) {
+                var destbuf = chgCharset(srcbuf, srccharset, destcharset);
+
+                if (bom) {
+                    fs.writeFileSync(srcfile, addBOM(destbuf));
+                }
+                else {
+                    fs.writeFileSync(srcfile, destbuf);
+                }
+            }
+            else {
+                console.log('Err: ' + srcfile + ' charset is not ' + srccharset);
 
                 continue;
             }
-
-            srcbuf = cutBOM(srcbuf);
         }
 
-        if (checkCharset(srcbuf, srccharset)) {
-            var destbuf = chgCharset(srcbuf, srccharset, destcharset);
-
-            if (bom) {
-                fs.writeFileSync(srcfile, addBOM(destbuf));
-            }
-            else {
-                fs.writeFileSync(srcfile, destbuf);
-            }
-        }
-        else {
-            console.log('Err: ' + srcfile + ' charset is not ' + srccharset);
-
-            continue;
-        }
+        console.log(srcfile + ' OK!');
     }
-
-    console.log(srcfile + ' OK!');
 }
